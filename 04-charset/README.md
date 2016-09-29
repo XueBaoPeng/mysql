@@ -111,7 +111,9 @@ show collations ;
    select * from my_collate_ci order by name;
    ```
 
-    ![QQ20160929-6](QQ20160929-6.png)
+![QQ20160929-5](QQ20160929-6.png)
+
+
 
 **有数据后修改校对集，修改无效**。
 
