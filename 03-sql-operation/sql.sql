@@ -18,3 +18,4 @@ show databases like 'information%';
 
 # 查看以information_开头的数据库。
 show databases like 'information\_%';
+

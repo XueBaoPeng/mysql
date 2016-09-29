@@ -12,7 +12,7 @@
 
 基本语法： 
 
-```Sql
+```Mysql
 create database 数据库名称 库选项
 ```
 
@@ -25,13 +25,13 @@ create database 数据库名称 库选项
 
 如果非要使用保留字和关键字。则使用反引号。
 
-```sql
+```mysql
 create database `database` charset utf8;
 ```
 
 设置中文数据库
 
-```sql
+```mysql
 set names gbk;
 create database 中国 utf8;
 ```
@@ -60,7 +60,7 @@ create database 中国 utf8;
 
 1. 查看所有数据库
 
-```Sql
+```mySql
 show databases;
 ```
 
@@ -68,7 +68,7 @@ show databases;
 
 2. 查看指定数据库：模糊查询
 
-```sql
+```mysql
 show databases like 'pattern';		pattern是匹配模式
 ```
 
@@ -76,7 +76,7 @@ show databases like 'pattern';		pattern是匹配模式
 
 _:匹配单个字符
 
-```sql
+```mysql
 # 查看以information_开头的数据库。
 show databases like 'information\_%';
 ```
@@ -85,7 +85,7 @@ show databases like 'information\_%';
 
 3. 查看数据库创建语句
 
-```Sql
+```mySql
 show create database mydatabase;
 ```
 
@@ -99,11 +99,11 @@ show create database mydatabase;
 
 数据库修改仅限库选项（字符集和校对集）
 
-```
+```mysql
 alter database 数据库名 字符集/校对集 库选项;
 ```
 
-```Sql
+```mySql
 alter database informationtest charset GBK
 ```
 
@@ -111,11 +111,11 @@ alter database informationtest charset GBK
 
 删除是最简单的
 
-```
+```mysql
 drop database 数据库名;
 ```
 
-```
+```mysql
 drop database informationtest;
 ```
 
@@ -135,7 +135,7 @@ drop database informationtest;
 
 ### 新增数据表
 
-```sql
+```mysql
 create table [if not exists] 表名(
  字段名称	数据类型,
  字段名称	数据类型 --最后一行不需要逗号。
@@ -150,7 +150,7 @@ create table [if not exists] 表名(
 2. 校对集:collate具体校对集。
 3. 存储引擎：engine 具体的存储引擎（innodb和myisam）
 
-```sql
+```mysql
 create table if not exists student(
 	name varchar(10),
 	gender varchar(10),
@@ -165,14 +165,14 @@ create table if not exists student(
 
 **方案1**：显示的指定所属数据库。
 
-```
+```mysql
 create table 数据库名.表名(
 字段名称	数据类型,
 字段名称	数据类型
 )[表选项];
 ```
 
-```
+```mysql
 create table if not exists mydatabase.student( -- 显示的将student表放到mydatabase数据库下。
 	name varchar(10),
 	gender varchar(10),
@@ -187,15 +187,15 @@ create table if not exists mydatabase.student( -- 显示的将student表放到my
 
 **进入数据库**：
 
-```
+```mysql
 use 数据库名;
 ```
 
-```
+```mysql
 use mydatabase;
 ```
 
-```
+```Mysql
 create table if not exists class(
 name varchar(10),
  room varchar(10)
@@ -212,7 +212,7 @@ name varchar(10),
 
    ​
 
-2.  在数据库对应的文件夹下，会产生对应表的结构文件（跟存储引擎有关）。
+2. 在数据库对应的文件夹下，会产生对应表的结构文件（跟存储引擎有关）。
 
  ![QQ20160929-10](QQ20160929-10.png)
 
@@ -222,7 +222,7 @@ name varchar(10),
 
 1. **查看所有表**
 
-```
+```mysql
 show databases;
 ```
 
@@ -230,13 +230,13 @@ show databases;
 
 2. **查看部分表** ：模糊查询
 
-```Sql
+```mySql
 show tables like 'pattern'  -- pattern 是匹配规则。
 %匹配多个字符
  _匹配一个字符
 ```
 
-```
+```mysql
 show tables like '%s' #匹配以s结尾。
 ```
 
@@ -244,17 +244,17 @@ show tables like '%s' #匹配以s结尾。
 
 3. **查看表创建语句**
 
-```
+```mysql
 show create table 表名;
 ```
 
-```
+```mySql
 show create table student\g		-- \g相当于分号;。
 ```
 
  ![QQ20160929-14](QQ20160929-14.png)
 
-```sql
+```mysql
 show create table student\G				-- \G 将结果旋转显示。
 ```
 
@@ -262,7 +262,7 @@ show create table student\G				-- \G 将结果旋转显示。
 
 4. **查看表结构**：查看表中的字段信息。
 
-```
+```mysql
 Desc/describe/show columes from 表名;
 ```
 
@@ -280,7 +280,7 @@ Desc/describe/show columes from 表名;
 
    1.1 **修改表名**：
 
-   ```
+   ```mysql
    rename table oldtablename to newtablename;
    ```
 
@@ -288,11 +288,11 @@ Desc/describe/show columes from 表名;
 
    1.2 **修改表选项**:字符集、校对集、存储引擎。
 
-   ```
+   ```mysql
    alter table 表名 表选项 [=] 值;
    ```
 
-   ```
+   ```mysql
    alter table my_student charset = utf8;
    ```
 
@@ -304,7 +304,7 @@ Desc/describe/show columes from 表名;
 
    2.1 __新增字段__。
 
-```sql
+```mysql
 alter table 表名 add [column] 字段名 数据类型 [列属性][位置];
 ```
 
@@ -316,7 +316,7 @@ After：在哪一个字段之后 after 字段名。默认是在最后一个字�
 
 __比如给学生增加一个id，放在第一 个位置。__
 
-```
+```mysql
 alter table my_student add column id int first;
 ```
 
@@ -324,13 +324,13 @@ alter table my_student add column id int first;
 
  	2.2 __修改字段__:**修改属性或位置或数据类型**
 
-```
+```mysql
 alter table 表名 modifiy 字段名 数据类型 [属性][位置];
 ```
 
 __将学生表中的学号变成固定长度并放到第二位__
 
-```
+```mysql
 alter table my_student modify number char(10) after id;
 ```
 
@@ -338,12 +338,12 @@ alter table my_student modify number char(10) after id;
 
 ​	2.3 **重命名字段**
 
-```
+```mysql
 alter table 表明
 change 旧字段名 新字段名 数据类型;
 ```
 
-```
+```mysql
 alter table my_student 
 change gender sex varchar(10);
 ```
@@ -352,13 +352,13 @@ change gender sex varchar(10);
 
 ​	2.4 **删除字段**
 
-```
+```mysql
 alter table 表名 drop 字段名;
 ```
 
 **删除学生表中的年龄字**
 
-```
+```mysql
 alter table my_student drop age;
 ```
 
@@ -368,16 +368,113 @@ alter table my_student drop age;
 
 ### 删除数据表
 
-```
+```mysql
 drop table 表名1，表名2；
 ```
 
 **删除class表**
 
-```
+```mysql
 drop table class;  
 ```
 
  ![QQ20160929-24](QQ20160929-24.png)
 
 $删除操作需谨慎$
+
+## 数据操作
+
+### 新增数据
+
+**有两种方案。**
+
+1. 给全表字段插入数据。不需要指定字段列表。：要求数据的值与表中设计的字段出现的顺序一致。凡是非数值数据，建议都用引号（单引号）包裹。
+
+```mySql
+insert into 表名 values(值列表)，[(值列表)]; -- 可以一次性插入多条记录
+```
+
+```mysql
+insert into my_student values
+(2,'fuck002','王八蛋','male'),
+(3,'fuck003','乌龟','male'),
+(4,'fuck004','雷克赛','female');
+```
+
+ ![QQ20160929-25](QQ20160929-25.png)
+
+2. 给部分字段插入数据，需要选定字段列表。字段列表出现的顺序与字段的顺序无关。但是值列表的顺序必须与选定的字段顺序一致。
+
+   ```mysql
+   insert into 表名(字段列表)  values(字段列表对应的值列表);
+   ```
+
+   ```mysql
+   insert into my_student(id,name,sex,number) values
+   (5,'王宝强','male','fuck005'),
+   (6,'马蓉','bitch','fuck006'),
+   (7,'宋喆','zazhong','fuck007');
+   ```
+
+ ![QQ20160929-26](QQ20160929-26.png)
+
+### 查看数据
+
+```mysql
+select */字段列表 from 表名 [where条件];
+```
+
+1. **查看所有数据**
+
+   ```mysql
+   select * from 表名;
+   ```
+
+   ```mysql
+   select * from my_student;
+   ```
+
+    ![QQ20160929-27](QQ20160929-27.png)
+
+2. **查看指定字段指定条件**
+
+   ```mysql
+   select 字段列表 from 表名 [where条件];
+   ```
+
+   ```mysql
+   select id,name,sex,number from my_student where name like '王%';
+   ```
+
+    ![QQ20160929-28](QQ20160929-28.png)
+
+   ​
+
+### 更新数据
+
+```mysql
+update 表名 set 字段名=值 [where条件];
+```
+
+```mysql
+update my_student set sex='female' where name='宋喆';
+```
+
+ ![QQ20160929-29](QQ20160929-29.png)
+
+### 删除数据
+
+删除不可逆，操作需谨慎。
+
+```mysql
+delete from 表名 [where条件];
+```
+
+```mysql
+delete from my_student where name='宋喆';
+```
+
+ ![QQ20160929-30](QQ20160929-30.png)
+
+
+
