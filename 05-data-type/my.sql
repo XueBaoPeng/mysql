@@ -82,13 +82,30 @@ create table my_enum(
 insert into my_enum values('男')；
 insert into my_enum values('male');
 
+-- 增加主键
 
+create table my_pri(
+name varchar(20) not null,
+id char(10) primary key comment '学号：itcast + 0000，不能重复'
+)charset utf8;
 
+-- 创建复合主键。
+create table my_pri2(
+id char(10) comment '学号 itcast+ 0000',
+course char(10) comment '课程代码 3901+0000',
+score tinyint unsigned default 0 comment '成绩',
+-- 增加主键 学号和课程号是对应的，应该唯一。
+primary key(id,course)
+)charset utf8
 
+-- 追加主键
+create table my_pri3(
+course  char(10) not null comment '课程编号',
+name varchar(10) not null comment '课程编号'
+)charset utf8;
 
-
-
-
+--
+alter table my_pri3 modifiy course char(10) primary key;
 
 
 

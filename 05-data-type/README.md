@@ -310,3 +310,221 @@ insert into my_default values('呵呵',18,default);
 ```
 
  ![QQ20161004-29](QQ20161004-29.png)
+
+#### 主键
+
+**Primary key**：**主键**。主要的键。一张表中只能有一个字段使用对应的键，用来唯一的约束该字段里的数据。不能重复。
+
+一张表只能有一个主键。
+
+**增加主键**
+
+多种方式。
+
+1. 创建表时直接在字段之后primary key。
+
+```mysql
+create table my_pri(
+name varchar(20) not null,
+id char(10) primary key comment '学号：itcast + 0000，不能重复'
+)charset utf8;
+```
+
+主键本身就不能为空，所以不加not null。
+
+ ![QQ20161005-30](QQ20161005-30.png)
+
+有点，快捷，缺点，只能使用一个字段作为主键。
+
+2. 在创建表之后，在所有字段之后加上primary key(主键字段列表)来创建。
+
+   ```mysql
+   -- 创建复合主键。
+   create table my_pri2(
+   id char(10) comment '学号 itcast+ 0000',
+   course char(10) comment '课程代码 3901+0000',
+   score tinyint unsigned default 0 comment '成绩',
+   -- 增加主键 学号和课程号是对应的，应该唯一。
+   primary key(id,course)
+   )charset utf8
+   ```
+
+ ![QQ20161005-31](QQ20161005-31.png)
+
+3. 当表创建好之后。追加主键。 
+
+```mysql
+alter table 表名 add primary key(字段列表);
+```
+
+```mysql
+create table my_pri3(
+course  char(10) not null comment '课程编号',
+name varchar(10) not null comment '课程编号'
+)charset utf8;
+```
+
+```mysql
+alter table my_pri3 modify course char(10) primary key comment '课程编号';
+```
+
+```mysql
+alter table my_pri3 add primary key(course);
+```
+
+##### 删除更新主键
+
+```mysql
+alter table 表名 drop primary key;
+```
+
+```Mysql
+alter table 表名 add primary key(字段列表);
+```
+
+```mysql
+alter table 表名 modify 字段名 primary key;
+```
+
+**主键只能删除再建**
+
+#### 主键分类
+
+业务主键：实实在在存在的。 
+
+逻辑主键：逻辑字段。值是什么都没有关系。
+
+#### 自动增长 auto_increment
+
+当该字段不给值或给默认值时，系统会从当前系统中的该值+1得到一个不同的数据。填入到该字段中。自增长通常和主键搭配。
+
+1. 任何一个字段要自增长，本身要是一个索引。
+
+   ```mysql
+   create table my_auto(
+     id int auto_increment,
+     name varchar(10) not null
+   )charset utf8; 
+   ```
+
+   ![QQ20161005-32](QQ20161005-32.png)
+
+2. 自增长字段必须是数字。而且必须是整数。
+
+   ```mysql
+   create table my_auto(
+     id varchar(1) primary key auto_increment,
+     name varchar(10) not null
+   )charset utf8; 
+   ```
+
+    ![QQ20161005-33](QQ20161005-33.png)
+
+3. 一张表最多只能有一个自增长。
+
+   ```mysql
+   create table my_auto(
+     id int(1) primary key auto_increment,
+     name varchar(10) not null
+   )charset utf8; 
+   ```
+
+ ![QQ20161005-34](QQ20161005-34.png)
+
+出发自增长。
+
+```Mysql
+insert into my_auto(name) values('hehe'),('xixi'),('haha');
+```
+
+ ![QQ20161005-35](QQ20161005-35.png)
+
+自增长第一个元素默认是1，每次自增1.
+
+如果自增长输入了值，下一次还是能正确增长（从最大值+1)。
+
+**修改自增长**。
+
+修改只能比当前已有的值大，
+
+```mysql
+alter table 表名 auto_increment = 值;
+```
+
+```mysql
+alter table my_auto auto_increment = 10;
+```
+
+ ![QQ20161005-36](QQ20161005-36.png)
+
+```mysql
+show variables like 'auto_increment';
+```
+
+ ![QQ20161005-37](QQ20161005-37.png)
+
+```mysql
+set auto_increment_increment = 5;
+```
+
+![QQ20161005-38](QQ20161005-38.png)
+
+**删除自增长**。
+
+```mysql
+alter table 表名 modify 字段 类型; -- 去掉自增长
+```
+
+```mysql
+alter table my_auto modify id char(10);
+```
+
+#### 唯一键
+
+增加唯一键。
+
+1. 在创建表的字段之后直接跟unique。
+
+```Mysql
+create table my_unique1(
+number char(10) unique comment '学号，可以为空'
+)charset utf8;
+```
+
+ ![QQ20161005-39](QQ20161005-39.png)
+
+2. 复合唯一键。
+
+   ```mysql
+   create table my_unique1(
+   number char(10) comment '学号，可以为空'
+   name varchar(20) not null;
+   unique key(number)
+   )charset utf8;
+   ```
+
+3. 追加唯一键。
+
+   ```mysql
+   create table my_unique1(
+   number char(10) comment '学号，可以为空'
+   name varchar(20) not null;
+   )charset utf8;
+   ```
+
+   ```mysql
+   alter table my_unique1 add unique key(number);
+   ```
+
+   如果唯一键也不能为空，那么他的作用和主键一样。
+
+##### 删除更新唯一键
+
+```mysql
+alter table 表名 drop index 索引名字。
+```
+
+```mysql
+alter table my_unique1 drop number;
+```
+
