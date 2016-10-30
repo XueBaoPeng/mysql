@@ -72,7 +72,7 @@ create table my_myisam(
    ```
 
    ```mysql
-   select * into outfile /usr/local/mysql-5.7.15-osx10.11-x86_64/data/tmp/my_student.txt from my_student;
+   select * into outfile '/usr/local/mysql-5.7.15-osx10.11-x86_64/data/tmp/my_student.txt' from my_student;
    ```
 
    ​
